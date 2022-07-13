@@ -1,4 +1,12 @@
 
+# Original REPOSITORY URL: https://github.com/orkestral/venom 
+
+## VERSION UPGRADES
+- Resolved bug that crash the browser when the venom-bot can't check the user phone.
+  - This bug occurs because the the function sendExists call getHost and the function getHost call sendExists infinite times. So I insert a callback limitator.
+- joinGroup function does not work, so i create joinGroup2  
+
+
 # 🕷Venom Bot🕸
 
 [![npm version](https://img.shields.io/npm/v/venom-bot.svg?color=green)](https://www.npmjs.com/package/venom-bot)
