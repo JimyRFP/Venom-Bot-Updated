@@ -462,4 +462,13 @@ export class GroupLayer extends RetrieverLayer {
       inviteCode
     );
   }
+  public async joinGroup2(inviteCode: string) {
+    inviteCode = inviteCode.replace('chat.whatsapp.com/', '');
+    inviteCode = inviteCode.replace('invite/', '');
+    inviteCode = inviteCode.replace('https://', '');
+    inviteCode = inviteCode.replace('http://', '');
+    return await this.page.evaluate(
+      (inviteCode)=>window.Store.GroupInvite.sendJoinGroupViaInvite(inviteCode)
+    );
+  }
 }

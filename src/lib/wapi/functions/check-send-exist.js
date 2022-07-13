@@ -52,9 +52,9 @@ MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNMMNMNMMMNMMNNMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNNNNMMNNNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 */
-export function scope(id, erro, status, text = null, result = null) {
+export function scope(id, erro, status, text = null, result = null,tries=0) {
   const object = {
-    me: WAPI.getHost(),
+    me: WAPI.getHost(tries),
     to: id,
     erro: erro,
     text: text,
@@ -102,7 +102,9 @@ export function sendCheckType(chatId = undefined) {
         chatId,
         true,
         404,
-        'The chat number must contain the parameters @c.us, @broadcast or @g.us. At the end of the number!'
+        'The chat number must contain the parameters @c.us, @broadcast or @g.us. At the end of the number!',
+        null,
+        
       );
     }
     if (
@@ -114,7 +116,7 @@ export function sendCheckType(chatId = undefined) {
         chatId,
         true,
         404,
-        'incorrect parameters! Use as an example: 000000000000@c.us'
+        'incorrect parameters! Use as an example: 000000000000@c.us',
       );
     }
 
@@ -147,47 +149,44 @@ export function sendCheckType(chatId = undefined) {
   }
 }
 
-export async function sendExist(chatId, returnChat = true, Send = true) {
+export async function sendExist(chatId, returnChat = true, Send = true,tries=0) {
+  const newTries=tries+1;
   const checkType = WAPI.sendCheckType(chatId);
   if (!!checkType && checkType.status === 404) {
     return checkType;
   }
   let ck = await window.WAPI.checkNumberStatus(chatId, false);
-
   if (
     ck.status === 404 &&
     !chatId.includes('@g.us') &&
     !chatId.includes('@broadcast')
   ) {
-    return WAPI.scope(chatId, true, ck.status, 'The number does not exist');
+    return WAPI.scope(chatId, true, ck.status, 'The number does not exist',null,newTries);
   }
 
   const chatWid = new Store.WidFactory.createWid(chatId);
-
   let chat =
     ck && ck.id && ck.id._serialized
       ? await window.WAPI.getChat(ck.id._serialized)
       : undefined;
-
   if (ck.numberExists && chat === undefined) {
     var idUser = new window.Store.UserConstructor(chatId, {
       intentionallyUsePrivateConstructor: true
     });
     chat = await Store.Chat.find(idUser);
   }
-
   if (!chat) {
     const storeChat = await window.Store.Chat.find(chatWid);
     if (storeChat) {
       chat =
         storeChat && storeChat.id && storeChat.id._serialized
           ? await window.WAPI.getChat(storeChat.id._serialized)
-          : undefined;
+          : undefined;  
     }
   }
 
   if (!ck.numberExists && !chat.t && chat.isUser) {
-    return WAPI.scope(chatId, true, ck.status, 'The number does not exist');
+    return WAPI.scope(chatId, true, ck.status, 'The number does not exist',null,newTries);
   }
 
   if (!ck.numberExists && !chat.t && chat.isGroup) {
@@ -195,7 +194,9 @@ export async function sendExist(chatId, returnChat = true, Send = true) {
       chatId,
       true,
       ck.status,
-      'The group number does not exist on your chat list, or it does not exist at all!'
+      'The group number does not exist on your chat list, or it does not exist at all!',
+      null,
+      newTries
     );
   }
 
@@ -215,7 +216,7 @@ export async function sendExist(chatId, returnChat = true, Send = true) {
   }
 
   if (!chat) {
-    return WAPI.scope(chatId, true, 404);
+    return WAPI.scope(chatId, true, 404,"",null,newTries);
   }
 
   if (Send) {
@@ -225,6 +226,5 @@ export async function sendExist(chatId, returnChat = true, Send = true) {
   if (returnChat) {
     return chat;
   }
-
-  return WAPI.scope(chatId, false, 200);
+  return WAPI.scope(chatId, false, 200,"",null,newTries);
 }

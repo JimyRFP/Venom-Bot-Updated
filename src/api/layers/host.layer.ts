@@ -346,6 +346,9 @@ export class HostLayer {
   public async getHostDevice() {
     return await this.page.evaluate(() => WAPI.getHost());
   }
+  public async getHostDeviceFast() {
+    return await this.page.evaluate(() => {return {id:window.Store.MaybeMeUser.getMaybeMeUser()}});
+  }
 
   /**
    * Retrieves WA version
