@@ -468,7 +468,13 @@ export class GroupLayer extends RetrieverLayer {
     inviteCode = inviteCode.replace('https://', '');
     inviteCode = inviteCode.replace('http://', '');
     return await this.page.evaluate(
-      (inviteCode)=>window.Store.GroupInvite.sendJoinGroupViaInvite(inviteCode)
+      async (inviteCode)=>{
+        try{
+          return await window.Store.GroupInvite.sendJoinGroupViaInvite(inviteCode);
+        }catch(e){
+          return e;
+        }
+      },inviteCode
     );
   }
 }

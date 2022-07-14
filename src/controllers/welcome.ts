@@ -8,12 +8,12 @@ require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 
 export const BRAND = process.env.NAME;
 
-import latestVersion from 'latest-version';
+//import latestVersion from 'latest-version';
 
 import { yo } from 'yoo-hoo';
 
 import { defaultLogger as logger } from '../utils/logger';
-import { upToDate } from '../utils/semver';
+//import { upToDate } from '../utils/semver';
 const { version } = require('../../package.json');
 
 // Global
@@ -34,26 +34,11 @@ export async function checkUpdates() {
   // Check for updates if needed
   if (!updatesChecked) {
     updatesChecked = true;
-    await checkVenomVersion();
+   // await checkVenomVersion();
   }
 }
 
-/**
- * Checs for a new versoin of venom and logs
- */
-async function checkVenomVersion() {
-  logger.info('Checking for updates');
-  await latestVersion('venom-pro')
-    .then((latest) => {
-      if (!upToDate(version, latest)) {
-        logger.info('There is a new version available');
-        logUpdateAvailable(version, latest);
-      }
-    })
-    .catch(() => {
-      logger.warn('Failed to check updates');
-    });
-}
+
 
 /**
  * Logs a boxen of instructions to update
