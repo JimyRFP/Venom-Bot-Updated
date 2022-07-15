@@ -155,6 +155,11 @@ export class SenderLayer extends ListenerLayer {
       }
     });
   }
+  public async sendText2(to: string, content: string): Promise<Object>{
+      return await this.page.evaluate(async (to,content)=>{
+          return window.WAPI.sendMessage(to,content);
+      },to,content);
+  }
 
   /**
    * Automatically sends a link with the auto generated link preview. You can also add a custom message to be added.
