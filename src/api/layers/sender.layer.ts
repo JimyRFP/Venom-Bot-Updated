@@ -157,7 +157,7 @@ export class SenderLayer extends ListenerLayer {
   }
   public async sendText2(to: string, content: string): Promise<Object>{
       return await this.page.evaluate(async (to,content)=>{
-          return window.WAPI.sendMessage(to,content);
+          return window.WAPI.sendMessage2(to,content);
       },to,content);
   }
 

@@ -222,6 +222,7 @@ interface WAPI {
     title: string
   ) => Promise<object>;
   sendMessage: (to: string, content: string) => Promise<Object>;
+  sendMessage2: (to: string, content: string) => Promise<Object>;
   sendListMenu: (
     to: string,
     title: string,
