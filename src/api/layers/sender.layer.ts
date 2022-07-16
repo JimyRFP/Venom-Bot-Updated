@@ -155,10 +155,18 @@ export class SenderLayer extends ListenerLayer {
       }
     });
   }
-  public async sendText2(to: string, content: string): Promise<Object>{
+  public async sendText2(to: string, content: string): Promise<any>{
       return await this.page.evaluate(async (to,content)=>{
-          let result=await window.WAPI.sendMessage2(to,content);
-          return result;
+          const idUser = new window.Store.UserConstructor(to, {
+            intentionallyUsePrivateConstructor: true
+          });
+          try{
+            const chat=await window.Store.Chat.find(idUser);
+            const r=await chat.sendMessage(content);
+            return r;
+          }catch(e){
+            return e;
+          }
       },to,content);
   }
 
