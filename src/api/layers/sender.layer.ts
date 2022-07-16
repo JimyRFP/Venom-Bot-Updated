@@ -157,15 +157,30 @@ export class SenderLayer extends ListenerLayer {
   }
   public async sendText2(to: string, content: string): Promise<any>{
       return await this.page.evaluate(async (to,content)=>{
-          const idUser = new window.Store.UserConstructor(to, {
-            intentionallyUsePrivateConstructor: true
-          });
+          let result={
+            error:true,
+            message:"",
+            addData:null,
+          };
+          const idUser = await window.Store.checkNumberBeta.queryPhoneExists(to);
+          if(!idUser){
+            result.message="Unknown User";
+            return result;
+          }  
+          if(!idUser.wid){
+            result.message="Unknown user";
+            result.addData=idUser;
+            return result;
+          }  
           try{
-            const chat=await window.Store.Chat.find(idUser);
+            const chat=await window.Store.Chat.find(idUser.wid);
             const r=await chat.sendMessage(content);
-            return r;
+            result.error=false;
+            return result;
           }catch(e){
-            return e;
+            result.message="Catch";
+            result.addData=e;
+            return result;
           }
       },to,content);
   }
