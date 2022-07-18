@@ -166,7 +166,8 @@ import {
   checkChat,
   checkNumberStatus,
   sendCheckType,
-  isBeta
+  isBeta,
+  getChatNew,
 } from './functions';
 import {
   base64ToFile,
@@ -346,6 +347,7 @@ if (typeof window.WAPI === 'undefined') {
   window.WAPI.getAllChatsWithMessages = getAllChatsWithMessages;
   window.WAPI.getAllGroups = getAllGroups;
   window.WAPI.getChat = getChat;
+  window.WAPI.getChatNew = getChatNew;
   window.WAPI.getStatus = getStatus;
   window.WAPI.getChatByName = getChatByName;
   window.WAPI.getNewId = getNewId;

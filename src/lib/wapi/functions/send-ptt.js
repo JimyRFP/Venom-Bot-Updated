@@ -61,10 +61,13 @@ import { base64ToFile } from '../helper';
  * @param {string} chatid Chat id
  */
 export async function sendPtt(imgBase64, chatid) {
-  const idUser = await window.Store.checkNumberBeta.queryPhoneExists(chatid);
-  if(!idUser || !idUser.wid)
-    return;
-  const chat=await window.Store.Chat.find(idUser.wid);
+  let chat=null;
+  try{
+    chat=await WAPI.getChatNew(chatid);
+  }catch(e){
+    let obj = WAPI.scope(chatid, false, result, null);
+    return obj;
+  }  
   if (chat && chat.status != 404) {
     let result = await Store.Chat.find(chat.id).then(async (chat) => {
       var mediaBlob = base64ToFile(imgBase64);
@@ -89,5 +92,8 @@ export async function sendPtt(imgBase64, chatid) {
     return chat;
   }
 }
+
+
+
 
 

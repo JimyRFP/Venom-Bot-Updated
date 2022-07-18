@@ -115,6 +115,7 @@ interface WAPI {
   getBlockList: () => Contact[];
   getBusinessProfilesProducts: (to: string) => any;
   getChat: (contactId: string) => Chat;
+  getChatNew:(contactId:string)=>any;
   getChatById: (contactId: string) => Chat;
   getChatIsOnline: (chatId: string) => Promise<boolean>;
   getLastSeen: (chatId: string) => Promise<number | boolean>;

@@ -162,18 +162,8 @@ export class SenderLayer extends ListenerLayer {
             message:"",
             addData:null,
           };
-          const idUser = await window.Store.checkNumberBeta.queryPhoneExists(to);
-          if(!idUser){
-            result.message="Unknown User";
-            return result;
-          }  
-          if(!idUser.wid){
-            result.message="Unknown user";
-            result.addData=idUser;
-            return result;
-          }  
           try{
-            const chat=await window.Store.Chat.find(idUser.wid);
+            const chat=await window.WAPI.getChatNew(to);
             const r=await chat.sendMessage(content);
             result.error=false;
             return result;
