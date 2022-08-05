@@ -65,7 +65,7 @@ export async function sendPtt(imgBase64, chatid) {
   try{
     chat=await WAPI.getChatNew(chatid);
   }catch(e){
-    let obj = WAPI.scope(chatid, false, result, null);
+    let obj = WAPI.scope(chatid,true, false, "Unknown chat");
     return obj;
   }  
   if (chat && chat.status != 404) {

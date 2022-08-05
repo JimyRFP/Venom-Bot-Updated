@@ -563,7 +563,7 @@ export class SenderLayer extends ListenerLayer {
           },
           { to, base64 }
         );
-        if (result['erro'] == true) {
+        if (!result || (result['erro'] == true)) {
           reject(result);
         } else {
           resolve(result);
