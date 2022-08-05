@@ -79,7 +79,7 @@ export async function sendPtt(imgBase64, chatid) {
     });
     const m = { type: 'sendPtt' };
     let To = await WAPI.getchatId(chat.id);
-    if (result === 'success' || result === 'OK') {
+    if (result && (result === 'success' || result === 'OK')) {
       let obj = WAPI.scope(To, false, result, null);
       Object.assign(obj, m);
       return obj;
