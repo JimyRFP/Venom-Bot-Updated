@@ -108,7 +108,6 @@ export class ListenerLayer extends ProfileLayer {
       const has = await this.page
         .evaluate((func) => typeof window[func] === 'function', func)
         .catch(() => false);
-
       if (!has) {
         await this.page
           .exposeFunction(func, (...args) =>
@@ -179,12 +178,13 @@ export class ListenerLayer extends ProfileLayer {
    * @returns Observable stream of messages
    */
   public async onMessage(fn: (message: Message) => void) {
-    this.listenerEmitter.on(ExposedFn.OnMessage, (state: Message) => {
+    const call=(state: Message) => {
       if (!callonMessage.checkObj(state.from, state.id)) {
         callonMessage.addObjects(state.from, state.id);
         fn(state);
       }
-    });
+    };
+    this.listenerEmitter.on(ExposedFn.OnMessage, call);
     return {
       dispose: () => {
         this.listenerEmitter.off(ExposedFn.OnMessage, (state: Message) => {
@@ -192,7 +192,11 @@ export class ListenerLayer extends ProfileLayer {
             callonMessage.addObjects(state.from, state.id);
             fn(state);
           }
-        });
+        },
+        );
+      },
+      remove:()=>{
+        this.listenerEmitter.removeListener(ExposedFn.OnMessage,call);
       }
     };
   }
