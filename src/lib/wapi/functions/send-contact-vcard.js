@@ -65,9 +65,17 @@ export async function sendContactVcard(chatId, contact, name) {
       'It is necessary to pass the number!'
     );
   }
-
-  const chat = await WAPI.sendExist(chatId);
-  const cont = await WAPI.sendExist(contact);
+  let cont,chat;
+  try{
+    chat = await window.WAPI.getChatNew(chatId);
+  }catch(e){
+    return WAPI.scope(chatId, true, 404, 'Error to number ' + chatId);
+  }  
+  try{
+    cont = await window.WAPI.getChatNew(contact);
+  }catch(e){
+    return WAPI.scope(contact, true, 404, 'Error to number ' + contact);
+  }
   if (
     chat &&
     chat.status != 404 &&
@@ -80,6 +88,7 @@ export async function sendContactVcard(chatId, contact, name) {
     let inChat = await WAPI.getchatId(chat.id).catch(() => {
       return WAPI.scope(chat.id, true, 404, 'Error to number ' + chatId);
     });
+    console.log([chat,newMsgId,inChat]);
 
     if (inChat) {
       chat.lastReceivedKey && chat.lastReceivedKey._serialized
