@@ -70,3 +70,4 @@ export async function getNewMessageId(chatId) {
     return false;
   }
 }
+

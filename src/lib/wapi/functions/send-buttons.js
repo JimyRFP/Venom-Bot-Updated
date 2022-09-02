@@ -59,7 +59,7 @@ MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
  * @param {string} subtitle the subtitle
  * @param {array} buttons arrays
  */
-export async function sendButtons(to, title, buttons, subtitle) {
+ export async function sendButtons(to, title, buttons, subtitle) {
   if (typeof title != 'string' || title.length === 0) {
     return WAPI.scope(to, true, 404, 'It is necessary to write a title!');
   }
@@ -98,9 +98,9 @@ export async function sendButtons(to, title, buttons, subtitle) {
     }
   }
 
-  const chat = await WAPI.sendExist(to);
+  const chat = await WAPI.getChatNew(to);
 
-  if (chat && chat.status != 404 && chat.id) {
+  if (chat && chat.id) {
     const newMsgId = await window.WAPI.getNewMessageId(chat.id._serialized);
     const fromwWid = await Store.MaybeMeUser.getMaybeMeUser();
 
@@ -125,8 +125,10 @@ export async function sendButtons(to, title, buttons, subtitle) {
       fromMe: false
     };
     var obj = {
-      dynamicReplyButtons: buttons
+      dynamicReplyButtons: buttons,
+      replyButtons: buttons
     };
+    console.log([chat,message]);
     Object.assign(message, obj);
     var result = (
       await Promise.all(window.Store.addAndSendMsgToChat(chat, message))
