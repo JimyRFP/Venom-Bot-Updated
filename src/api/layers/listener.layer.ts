@@ -81,7 +81,7 @@ export class ListenerLayer extends ProfileLayer {
   constructor(public page: Page, session?: string, options?: CreateConfig) {
     super(page, session, options);
 
-    this.page.on('load', async () => {
+    /*this.page.on('load', async () => {
       try {
         await page.waitForSelector('canvas, #app .two, #startup', {
           visible: true
@@ -89,14 +89,23 @@ export class ListenerLayer extends ProfileLayer {
       } catch {}
       await this._initialize(this.page);
       await this.initialize();
-    });
+    });*/
 
     this.page.on('close', () => {
       this.cancelAutoClose();
       this.spin('Page Closed', 'fail');
     });
   }
-
+  public async startListeners(){
+    const page=this.page;
+    try {
+      await page.waitForSelector('canvas, #app .two, #startup', {
+        visible: true
+      });
+    } catch {}
+    await this._initialize(this.page);
+    await this.initialize();
+  }
   public async initialize() {
     const functions = [
       ...Object.values(ExposedFn),

@@ -275,7 +275,13 @@ export async function create(
     });
 
     const client = new Whatsapp(page, session, mergedOptions);
-
+    logger.info('Initilizer listeners...', {
+      session
+    });
+    await client.startListeners();
+    logger.info(`${chalk.green('Listeners successfully initialized')}`, {
+      session
+    });
     client.onStreamChange(async (stateStream) => {
       if (stateStream === SocketStream.CONNECTED) {
         statusFind && statusFind('chatsAvailable', session);

@@ -94,6 +94,7 @@ export async function initWhatsapp(
       await waPage.goto(puppeteerConfig.whatsappUrl, {
         waitUntil: 'domcontentloaded'
       });
+
       await browser.userAgent();
       // Auth with token
       await auth_InjectToken(waPage, session, options, token);
@@ -353,7 +354,6 @@ export async function getWhatsappPage(
   browser: Browser | BrowserContext
 ): Promise<Page> {
   const pages = await browser.pages().catch();
-
   if (pages.length) {
     return pages[0];
   }
