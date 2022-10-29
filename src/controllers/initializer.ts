@@ -275,13 +275,7 @@ export async function create(
     });
 
     const client = new Whatsapp(page, session, mergedOptions);
-    logger.info('Initilizer listeners...', {
-      session
-    });
-    await client.startListeners();
-    logger.info(`${chalk.green('Listeners successfully initialized')}`, {
-      session
-    });
+    
     client.onStreamChange(async (stateStream) => {
       if (stateStream === SocketStream.CONNECTED) {
         statusFind && statusFind('chatsAvailable', session);
@@ -450,6 +444,13 @@ export async function create(
     if (mergedOptions.debug) {
       console.log(`\nDebug: injecting Api done...`);
     }
+    logger.info('Initilizer listeners...', {
+      session
+    });
+    await client.startListeners();
+    logger.info(`${chalk.green('Listeners successfully initialized')}`, {
+      session
+    });
     statusFind && statusFind('successChat', this.session);
     return client;
   }

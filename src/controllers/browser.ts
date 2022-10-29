@@ -131,7 +131,6 @@ export async function injectApi(page: Page) {
     path: require.resolve('@wppconnect/wa-js')
   });
   // ********************************************
-
   await page
     .waitForFunction(
       () => {
