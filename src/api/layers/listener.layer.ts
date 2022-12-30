@@ -112,15 +112,14 @@ export class ListenerLayer extends ProfileLayer {
       'onAddedToGroup',
       'onIncomingCall'
     ];
-
     for (const func of functions) {
       const has = await this.page
         .evaluate((func) => typeof window[func] === 'function', func)
         .catch(() => false);
       if (!has) {
         await this.page
-          .exposeFunction(func, (...args) =>
-            this.listenerEmitter.emit(func, ...args)
+          .exposeFunction(func, (...args) =>{
+            this.listenerEmitter.emit(func, ...args)}
           )
           .catch(() => {});
       }

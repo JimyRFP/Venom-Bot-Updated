@@ -155,6 +155,24 @@ export class SenderLayer extends ListenerLayer {
       }
     });
   }
+  public async getNumberChat(number:string):Promise<any>{
+    return await this.page.evaluate(async (number)=>{
+          let result={
+            error:true,
+            message:"",
+            addData:null,
+            data:null,
+          };
+          try{
+             let data=await window.WAPI.getChatNew(number);
+             result.error=false;
+             result.data=data.id;
+          }catch(e){
+            
+          }
+          return result;
+    },number);
+  }
   public async sendText2(to: string, content: string): Promise<any>{
       return await this.page.evaluate(async (to,content)=>{
           let result={
