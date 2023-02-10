@@ -53,7 +53,7 @@ MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNNNNMMNNNMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 */
 export function sendMessage2(id, message, done) {
-  var chat = WAPI.getChat(id);
+  var chat = WAPI.getChatNew(id);
   if (chat !== undefined) {
     try {
       if (done !== undefined) {
@@ -72,3 +72,4 @@ export function sendMessage2(id, message, done) {
   if (done !== undefined) done(false);
   return false;
 }
+
