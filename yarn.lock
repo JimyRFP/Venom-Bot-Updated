@@ -915,10 +915,10 @@
   "resolved" "https://registry.npmjs.org/@webpack-cli/serve/-/serve-1.7.0.tgz"
   "version" "1.7.0"
 
-"@wppconnect/wa-js@^2.18.0":
-  "integrity" "sha512-ssb+8sBd3xeZQVtlRyDrlVBGoFPLRkqfuYu0a/Mgy8pE4Z4AhEPmMZqVukZzxZdYrRWDZnfcyVg098c0m8Ot4A=="
-  "resolved" "https://registry.npmjs.org/@wppconnect/wa-js/-/wa-js-2.18.0.tgz"
-  "version" "2.18.0"
+"@wppconnect/wa-js@^2.19.1":
+  "integrity" "sha512-UwQUwe6m6o9FFNKA+Dv50wzr9yFVKUPkbLB8Qaq/AVsB0R5yPuX7af2QOM+Q5EvI2PQgsIjRMqno1/LuRZNxxA=="
+  "resolved" "https://registry.npmjs.org/@wppconnect/wa-js/-/wa-js-2.20.0.tgz"
+  "version" "2.20.0"
 
 "@xtuc/ieee754@^1.2.0":
   "integrity" "sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA=="
@@ -6320,6 +6320,11 @@
   "integrity" "sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc="
   "resolved" "https://registry.npmjs.org/q/-/q-1.5.1.tgz"
   "version" "1.5.1"
+
+"qr-base64@^0.3.0":
+  "integrity" "sha512-Xm5XyWbCNWQRG4bpiVp5eIs2isXRYceF1+0xZATdtuMUzEyZGVCPMx4Yzyj6nVo8B+jLh7O9Q+a2bgNmNfM/3g=="
+  "resolved" "https://registry.npmjs.org/qr-base64/-/qr-base64-0.3.0.tgz"
+  "version" "0.3.0"
 
 "qrcode-terminal@^0.12.0":
   "integrity" "sha512-EXtzRZmC+YGmGlDFbXKxQiMZNwCLEO6BANKXG4iCtSIM0yqc/pappSx3RIKr4r0uh5JsBckOXeKrB3Iz7mdQpQ=="
